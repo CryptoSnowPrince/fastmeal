@@ -1,6 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
+//  _______  _______  _______  _______  __   __  _______  _______  ___           ___  _______ 
+// |       ||   _   ||       ||       ||  |_|  ||       ||   _   ||   |         |   ||       |
+// |    ___||  |_|  ||  _____||_     _||       ||    ___||  |_|  ||   |         |   ||   _   |
+// |   |___ |       || |_____   |   |  |       ||   |___ |       ||   |         |   ||  | |  |
+// |    ___||       ||_____  |  |   |  |       ||    ___||       ||   |___  ___ |   ||  |_|  |
+// |   |    |   _   | _____| |  |   |  | ||_|| ||   |___ |   _   ||       ||   ||   ||       |
+// |___|    |__| |__||_______|  |___|  |_|   |_||_______||__| |__||_______||___||___||_______|
+//
+
+// Please visit https://fastmeal.io
+
 // File @openzeppelin/contracts/token/ERC20/IERC20.sol@v4.9.0
 
 // OpenZeppelin Contracts (last updated v4.9.0) (token/ERC20/IERC20.sol)
@@ -1766,11 +1777,24 @@ abstract contract OFTCore is NonblockingLzApp, ERC165, IOFTCore {
 }
 
 
-// File contracts/token/oft/OFT.sol
+// Tokenomics
+// Name: FastMeal
+// Symbol: $FTL
+// Decimals: 6
+// Total Supply: 1.5 billion $FTL tokens
+// Presale: 30% (450 million $FTL)
+// Giveaway/Airdrop: 5% (75 million $FTL)
+// Team: 10% (150 million $FTL)
+// Uniswap Liquidity: 7% (105 million $FTL)
+// Treasury: 15% (225 million $FTL)
+// Advisor: 3% (45 million $FTL)
+// Reward Pool: 10% (150 million $FTL)
+// Work-to-Earn: 20% (300 million $FTL)
 
-
-contract OFT is OFTCore, ERC20, IOFT {
-    constructor(string memory _name, string memory _symbol, address _lzEndpoint) ERC20(_name, _symbol) OFTCore(_lzEndpoint) {}
+contract FastMeal is OFTCore, ERC20, IOFT {
+    constructor(string memory _name, string memory _symbol, address _lzEndpoint) ERC20(_name, _symbol) OFTCore(_lzEndpoint) {
+        _mint(msg.sender, 1500 * 1000_000 * 1000_000);
+    }
 
     function decimals() public view virtual override returns (uint8) {
         return 6;
