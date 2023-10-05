@@ -28,8 +28,8 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 // Total Supply: 1.5 billion $FTL tokens
 // Presale: 30% (450 million $FTL)
 //      Phase 1:
-//      - Allocation: 5% of Private and Presale (22,500,000 $BGRD)
-//      - Price per Token: $0.01 per $BGRD
+//      - Allocation: 5% of Private and Presale (22,500,000 $FTL)
+//      - Price per Token: $0.01 per $FTL
 //      - Total Funds Raised in Phase 1: $225,000
 contract FastMealPresalePhase1 is OwnableUpgradeable {
     IERC20 public FTL;
@@ -52,7 +52,7 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
         uint256 _tokenPriceDen,
         uint256 _startTime,
         uint256 _endTime,
-        address _usdt
+        IERC20 _usdt
     ) public initializer {
         __Ownable_init();
         FTL = _ftl;
@@ -60,7 +60,7 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
         TOKEN_PRICE_DEN = _tokenPriceDen;
         START_TIME = _startTime;
         END_TIME = _endTime;
-        USDT = IERC20(_usdt);
+        USDT = _usdt;
     }
 
     function buyToken(uint256 amount) external {
@@ -70,16 +70,13 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
         uint256 usdtAmount = (amount * TOKEN_PRICE_NUM) / TOKEN_PRICE_DEN;
         userFunds[msg.sender] += usdtAmount;
 
-        require(
-            USDT.transferFrom(msg.sender, address(this), usdtAmount),
-            "TRANSFER_FROM_FAIL"
-        );
+        SafeERC20.safeTransferFrom(USDT, msg.sender, address(this), usdtAmount);
         userAmounts[msg.sender] += amount;
 
         totalFunds += usdtAmount;
         totalAmounts += amount;
 
-        require(FTL.transfer(msg.sender, amount), "TRANSFER_FAIL");
+        SafeERC20.safeTransfer(FTL, msg.sender, amount);
     }
 
     function SetToken(IERC20 _ftl) external onlyOwner {
@@ -121,6 +118,6 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
         require(block.timestamp > END_TIME, "END_TIME_UNDER");
         uint256 balance = token.balanceOf(address(this));
         require(balance >= amount, "Insufficient funds for withdrawal");
-        token.transfer(to, amount);
+        SafeERC20.safeTransfer(token, to, amount);
     }
 }
