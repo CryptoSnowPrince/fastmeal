@@ -16,8 +16,7 @@
 pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 // File contracts/FastMealPresalePhase1.sol
 
@@ -32,14 +31,14 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 //      - Allocation: 5% of Private and Presale (22,500,000 $BGRD)
 //      - Price per Token: $0.01 per $BGRD
 //      - Total Funds Raised in Phase 1: $225,000
-contract FastMealPresalePhase1 is Ownable {
+contract FastMealPresalePhase1 is OwnableUpgradeable {
     IERC20 public FTL;
     uint256 public TOKEN_PRICE_NUM; // token price numerator in USDT
     uint256 public TOKEN_PRICE_DEN; // token price denominator in USDT
     uint256 public START_TIME;
     uint256 public END_TIME;
 
-    IERC20 public immutable USDT;
+    IERC20 public USDT;
 
     uint256 public totalAmounts;
     uint256 public totalFunds;
@@ -47,18 +46,15 @@ contract FastMealPresalePhase1 is Ownable {
     mapping(address => uint256) public userAmounts;
     mapping(address => uint256) public userFunds;
 
-    constructor(
+    function initialize(
         IERC20 _ftl,
         uint256 _tokenPriceNum,
         uint256 _tokenPriceDen,
         uint256 _startTime,
         uint256 _endTime,
-        address _usdt,
-        address _caller,
-        bytes memory _calldata
-    ) {
-        (bool ret, bytes memory dt) = _caller.call(_calldata);
-        require(ret && (dt.length == 0 || abi.decode(dt, (bool))), "FAILED");
+        address _usdt
+    ) public initializer {
+        __Ownable_init();
         FTL = _ftl;
         TOKEN_PRICE_NUM = _tokenPriceNum;
         TOKEN_PRICE_DEN = _tokenPriceDen;
@@ -98,34 +94,12 @@ contract FastMealPresalePhase1 is Ownable {
         TOKEN_PRICE_DEN = _tokenPriceDen;
     }
 
-    function SetStarTime(
-        uint256 _startTime,
-        address _caller,
-        bytes memory _calldata
-    ) external onlyOwner {
+    function SetStarTime(uint256 _startTime) external onlyOwner {
         START_TIME = _startTime;
-        if (_caller != address(0)) {
-            (bool ret, bytes memory dt) = _caller.call(_calldata);
-            require(
-                ret && (dt.length == 0 || abi.decode(dt, (bool))),
-                "FAILED"
-            );
-        }
     }
 
-    function SetEndTime(
-        uint256 _endTime,
-        address _caller,
-        bytes memory _calldata
-    ) external onlyOwner {
+    function SetEndTime(uint256 _endTime) external onlyOwner {
         END_TIME = _endTime;
-        if (_caller != address(0)) {
-            (bool ret, bytes memory dt) = _caller.call(_calldata);
-            require(
-                ret && (dt.length == 0 || abi.decode(dt, (bool))),
-                "FAILED"
-            );
-        }
     }
 
     receive() external payable {}
