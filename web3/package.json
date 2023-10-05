@@ -1,5 +1,5 @@
 {
-  "name": "fastmeal-contracts",
+  "name": "fastmeal-web3",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.3",
+    "@openzeppelin/contracts-upgradeable": "^4.9.3",
     "web3": "^4.1.2"
   }
 }
