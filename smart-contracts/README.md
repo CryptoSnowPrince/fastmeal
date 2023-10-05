@@ -14,6 +14,8 @@ npx hardhat run scripts/deploy.js
 
 ## tokenomics
 
+### FastMeal(FTL)
+
 ```text
 Name: $FTL
 Symbol: $FTL
@@ -30,7 +32,25 @@ Reward Pool: 10% (150 million $FTL)
 Work-to-Earn: 20% (300 million $FTL)
 ```
 
+### Presale
+
+```text
+Presale Strategy
+FastMeal Token Presale
+Name: FastMeal
+Symbol: $FTL
+Decimals: 6
+Total Supply: 1.5 billion $FTL tokens
+Presale: 30% (450 million $FTL)
+     Phase 1:
+     - Allocation: 5% of Private and Presale (22,500,000 $FTL)
+     - Price per Token: $0.01 per $FTL
+     - Total Funds Raised in Phase 1: $225,000
+```
+
 ## testnet
+
+### FastMeal
 
 ```text
 Goerli
@@ -60,4 +80,14 @@ BSC Testnet
     setTrustedRemoteAddress
     _remoteChainId: 10121
     _remoteAddress: 0x594D65457e3fcd493A5935f9463516F7D4c60383
+```
+
+### Presale
+
+```text
+Implement- Presale
+
+ProxyAdmin
+
+TransparentUpgradeableProxy(Proxy)
 ```
