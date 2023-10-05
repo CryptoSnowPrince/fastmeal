@@ -1,4 +1,4 @@
-# contracts
+# Fastmeal Contracts
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
@@ -12,7 +12,7 @@ npx hardhat node
 npx hardhat run scripts/deploy.js
 ```
 
-## tokenomics
+## Tokenomics
 
 ### FastMeal(FTL)
 
@@ -48,7 +48,7 @@ Presale: 30% (450 million $FTL)
      - Total Funds Raised in Phase 1: $225,000
 ```
 
-## testnet
+## Testnet
 
 ### FastMeal
 
