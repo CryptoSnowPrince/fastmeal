@@ -20,6 +20,9 @@ import { WriteContractPrepared } from '../components/WriteContractPrepared'
 export function Page() {
   return (
     <>
+      <h1 className="text-3xl font-bold underline text-yellow-700">
+        Hello world! again
+      </h1>
       <h1>wagmi + Web3Modal + Next.js</h1>
 
       <Web3Button />
