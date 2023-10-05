@@ -32,35 +32,48 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 //      - Price per Token: $0.01 per $FTL
 //      - Total Funds Raised in Phase 1: $225,000
 contract FastMealPresalePhase1 is OwnableUpgradeable {
+    struct UserInfo {
+        uint256 amount;
+        uint256 claimed;
+        uint256 funds;
+    }
+
+    IERC20 public USDT;
     IERC20 public FTL;
     uint256 public TOKEN_PRICE_NUM; // token price numerator in USDT
     uint256 public TOKEN_PRICE_DEN; // token price denominator in USDT
     uint256 public START_TIME;
     uint256 public END_TIME;
-
-    IERC20 public USDT;
+    uint256 public VESTING_DURATION;
+    uint256 public CLIFF_TIME;
 
     uint256 public totalAmounts;
     uint256 public totalFunds;
 
-    mapping(address => uint256) public userAmounts;
-    mapping(address => uint256) public userFunds;
+    mapping(address => UserInfo) public userInfo;
+
+    event LogBuyToken(address indexed user, uint256 flt, uint256 usdt);
+    event LogClaimToken(address indexed user, uint256 flt);
 
     function initialize(
+        IERC20 _usdt,
         IERC20 _ftl,
         uint256 _tokenPriceNum,
         uint256 _tokenPriceDen,
         uint256 _startTime,
         uint256 _endTime,
-        IERC20 _usdt
+        uint256 _vestingDuration,
+        uint256 _cliffTime
     ) public initializer {
         __Ownable_init();
+        USDT = _usdt;
         FTL = _ftl;
         TOKEN_PRICE_NUM = _tokenPriceNum;
         TOKEN_PRICE_DEN = _tokenPriceDen;
         START_TIME = _startTime;
         END_TIME = _endTime;
-        USDT = _usdt;
+        VESTING_DURATION = _vestingDuration;
+        CLIFF_TIME = _cliffTime;
     }
 
     function buyToken(uint256 amount) external {
@@ -68,18 +81,53 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
         require(block.timestamp <= END_TIME, "END_TIME_OVER");
 
         uint256 usdtAmount = (amount * TOKEN_PRICE_NUM) / TOKEN_PRICE_DEN;
-        userFunds[msg.sender] += usdtAmount;
+        userInfo[msg.sender].funds += usdtAmount;
 
         SafeERC20.safeTransferFrom(USDT, msg.sender, address(this), usdtAmount);
-        userAmounts[msg.sender] += amount;
+        userInfo[msg.sender].amount += amount;
 
         totalFunds += usdtAmount;
         totalAmounts += amount;
 
-        SafeERC20.safeTransfer(FTL, msg.sender, amount);
+        emit LogBuyToken(msg.sender, amount, usdtAmount);
     }
 
-    function SetToken(IERC20 _ftl) external onlyOwner {
+    function claimToken() external {
+        require(block.timestamp > END_TIME + CLIFF_TIME, "NO_CLAIM_DURATION");
+        uint256 delta = (block.timestamp - END_TIME - CLIFF_TIME);
+
+        uint256 claimable = delta > VESTING_DURATION
+            ? userInfo[msg.sender].amount
+            : (delta * userInfo[msg.sender].amount) / VESTING_DURATION;
+
+        require(claimable > userInfo[msg.sender].claimed, "NO_PENDING_TOKEN");
+        uint256 pending = claimable - userInfo[msg.sender].claimed;
+
+        SafeERC20.safeTransfer(FTL, msg.sender, pending);
+        emit LogClaimToken(msg.sender, pending);
+    }
+
+    function isClaimable(address user) external view returns (uint256) {
+        if (block.timestamp <= END_TIME + CLIFF_TIME) return 0;
+
+        uint256 delta = (block.timestamp - END_TIME - CLIFF_TIME);
+
+        uint256 claimable = delta > VESTING_DURATION
+            ? userInfo[user].amount
+            : (delta * userInfo[user].amount) / VESTING_DURATION;
+
+        if (claimable <= userInfo[user].claimed) return 0;
+
+        uint256 pending = claimable - userInfo[user].claimed;
+
+        return pending;
+    }
+
+    function SetUsdtToken(IERC20 _usdt) external onlyOwner {
+        USDT = _usdt;
+    }
+
+    function SetFtlToken(IERC20 _ftl) external onlyOwner {
         FTL = _ftl;
     }
 
@@ -97,6 +145,14 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
 
     function SetEndTime(uint256 _endTime) external onlyOwner {
         END_TIME = _endTime;
+    }
+
+    function SetVesting(
+        uint256 _vestingDuration,
+        uint256 _cliffTime
+    ) external onlyOwner {
+        VESTING_DURATION = _vestingDuration;
+        CLIFF_TIME = _cliffTime;
     }
 
     receive() external payable {}
