@@ -52,8 +52,8 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
 
     mapping(address => UserInfo) public userInfo;
 
-    event LogBuyToken(address indexed user, uint256 flt, uint256 usdt);
-    event LogClaimToken(address indexed user, uint256 flt);
+    event LogBuyToken(address indexed user, uint256 ftl, uint256 usdt);
+    event LogClaimToken(address indexed user, uint256 ftl);
 
     function initialize(
         IERC20 _usdt,
@@ -102,6 +102,7 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
 
         require(claimable > userInfo[msg.sender].claimed, "NO_PENDING_TOKEN");
         uint256 pending = claimable - userInfo[msg.sender].claimed;
+        userInfo[msg.sender].claimed = claimable;
 
         SafeERC20.safeTransfer(FTL, msg.sender, pending);
         emit LogClaimToken(msg.sender, pending);
