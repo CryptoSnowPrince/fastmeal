@@ -1,4 +1,5 @@
 import './globals.css'
+import Image from 'next/image';
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 
 import { WagmiConfig } from "wagmi";
@@ -31,10 +32,10 @@ const chains = [
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
 
 const metadata = {
-	name: "Next Starter Template",
-	description: "A Next.js starter template with Web3Modal v3 + Wagmi",
-	url: "https://web3modal.com",
-	icons: ["https://avatars.githubusercontent.com/u/37784886"],
+	name: "Fast Meal",
+	description: "Fast Meal",
+	url: "https://presale.fastmeal.io",
+	icons: ["https://presale.fastmeal.io/logo.png"],
 };
 
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
@@ -53,7 +54,15 @@ export default function App({ Component, pageProps }: AppProps) {
 				<WagmiConfig config={wagmiConfig}>
 					<Component {...pageProps} />
 				</WagmiConfig>
-			) : null}
+			) : <div className='w-full h-[calc(100vh-100px)] flex justify-center items-center'>
+				<Image
+					src="/logo.png"
+					alt="Loading"
+					height="128"
+					width="128"
+					className='animate-pulse'
+				/>
+			</div>}
 		</>
 	);
 }
