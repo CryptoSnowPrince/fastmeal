@@ -1,16 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
 
 export default function Home() {
-	const [isNetworkSwitchHighlighted, setIsNetworkSwitchHighlighted] =
-		useState(false);
-	const [isConnectHighlighted, setIsConnectHighlighted] = useState(false);
-
-	const closeAll = () => {
-		setIsNetworkSwitchHighlighted(false);
-		setIsConnectHighlighted(false);
-	};
 	return (
 		<>
 			<Head>
