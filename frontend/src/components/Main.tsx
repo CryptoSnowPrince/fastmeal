@@ -1,4 +1,3 @@
-import Image from "next/image";
 import BuyCard from "./BuyCard";
 import Status from "./Status";
 import ClaimCard from "./ClaimCard";
