@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
-export default function ClaimCard() {
+export default function ClaimCard(presaleMode: any) {
     const [usdtAmount, setUsdtAmount] = useState('')
     return (
         <div className="w-full lg:w-1/3 rounded-2xl border-2 border-gray-700 flex flex-col items-center justify-center text-center px-2 py-5 bg-center bg-no-repeat bg-contain bg-[url('/back2.png')]">
