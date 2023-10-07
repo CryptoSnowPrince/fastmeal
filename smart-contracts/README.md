@@ -1,26 +1,13 @@
 # Fastmeal Contracts
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+## Logic
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
-
-## Tokenomics
-
-### FastMeal(FTL)
+### FastMeal(FTL) Tokenomics
 
 ```text
-Name: $FTL
+Name: FastMeal
 Symbol: $FTL
 Decimals: 6
-
 Total Supply: 1.5 billion $FTL tokens
 Presale: 30% (450 million $FTL)
 Giveaway/Airdrop: 5% (75 million $FTL)
@@ -32,7 +19,7 @@ Reward Pool: 10% (150 million $FTL)
 Work-to-Earn: 20% (300 million $FTL)
 ```
 
-### Presale
+### Presale Logic
 
 ```text
 Presale Strategy
@@ -48,9 +35,9 @@ Presale: 30% (450 million $FTL)
      - Total Funds Raised in Phase 1: $225,000
 ```
 
-## Testnet
+## Testnet Addresses
 
-### FastMeal
+### FastMeal Addresses
 
 ```text
 Goerli
@@ -82,7 +69,7 @@ BSC Testnet
     _remoteAddress: 0x594D65457e3fcd493A5935f9463516F7D4c60383
 ```
 
-### Presale
+### Presale Addresses
 
 ```text
 Implement- Presale
