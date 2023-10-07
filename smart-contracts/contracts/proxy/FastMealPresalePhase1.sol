@@ -1118,6 +1118,7 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
 
     uint256 public totalAmounts;
     uint256 public totalFunds;
+    uint256 public totalClaimed;
 
     mapping(address => UserInfo) public userInfo;
 
@@ -1174,6 +1175,7 @@ contract FastMealPresalePhase1 is OwnableUpgradeable {
         userInfo[msg.sender].claimed = claimable;
 
         require(FTL.balanceOf(address(this)) >= pending, "INSUFFICIENT_FTL");
+        totalClaimed += pending;
         SafeERC20.safeTransfer(FTL, msg.sender, pending);
         emit LogClaimToken(msg.sender, pending);
     }
