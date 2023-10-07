@@ -1791,8 +1791,8 @@ abstract contract OFTCore is NonblockingLzApp, ERC165, IOFTCore {
 // Reward Pool: 10% (150 million $FTL)
 // Work-to-Earn: 20% (300 million $FTL)
 contract FastMeal is OFTCore, ERC20, IOFT {
-    constructor(string memory _name, string memory _symbol, address _lzEndpoint) ERC20(_name, _symbol) OFTCore(_lzEndpoint) {
-        _mint(msg.sender, 1500 * 1000_000 * 1000_000);
+    constructor(string memory _name, string memory _symbol, address _lzEndpoint, uint256 _initialSupply) ERC20(_name, _symbol) OFTCore(_lzEndpoint) {
+        _mint(msg.sender, _initialSupply);
     }
 
     function decimals() public view virtual override returns (uint8) {
