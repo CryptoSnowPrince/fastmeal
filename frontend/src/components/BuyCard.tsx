@@ -33,11 +33,9 @@ export default function BuyCard() {
                     />
                     <Image src='/usdt.svg' width={35} height={35} alt='logo' />
                 </div>
-            </div>
-            <div className="my-2">
-                <FontAwesomeIcon icon={faArrowCircleDown} size="2xl" />
-            </div>
-            <div className="w-full lg:w-3/4 py-2 rounded-2xl bg-black/[0.95] border-2 border-gray-700 flex flex-col justify-center text-center px-2">
+                <div className="my-2">
+                    <FontAwesomeIcon icon={faArrowCircleDown} size="2xl" />
+                </div>
                 <div className="w-full px-3 flex flex-row items-center justify-between text-lg text-center">
                     <label className="">You receive</label>
                     <div className="flex flex-row items-center justify-end gap-2 text-lg text-center">
