@@ -129,8 +129,8 @@ export default function BuyCard(props: any) {
                     data = {
                         address: usdt[chain ? chain.id : global.chainIds[0]],
                         abi: erc20ABI,
-                        functionName: 'increaseAllowance',
-                        args: [global.MAX_UINT256]
+                        functionName: 'approve',
+                        args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256]
                     }
                 } else {
                     data = {

@@ -15,27 +15,29 @@ export const global = {
     API_URL: 'https://projects.cryptosnowprince.com/api',
     PROJECT: 'fastmeal',
     ACTION: true,
-    chains: [mainnet, bsc, goerli, bscTestnet],
-    chainIds: [mainnet.id, bsc.id, goerli.id, bscTestnet.id]
+    chains: [goerli, bscTestnet],
+    chainIds: [goerli.id, bscTestnet.id],
+    // chains: [mainnet, bsc, goerli, bscTestnet],
+    // chainIds: [mainnet.id, bsc.id, goerli.id, bscTestnet.id]
 }
 
 export const usdt: any = {
-    [mainnet.id]: "",
-    [bsc.id]: "",
+    // [mainnet.id]: "",
+    // [bsc.id]: "",
     [goerli.id]: "0x3F2C908a3C236b4e3c32Bfb37DB823B54d21999B",
     [bscTestnet.id]: "0x904bfC5AaF5A099bdAaF2d5fcDd55dE6Bc6dda29",
 }
 
 export const token = {
-    [mainnet.id]: "",
-    [bsc.id]: "",
+    // [mainnet.id]: "",
+    // [bsc.id]: "",
     [goerli.id]: "0xdf038719528eE246A08F01a29678B5d3387EC694",
     [bscTestnet.id]: "0xFce807fD77651E20FAdBAb378f7485D42d54Ac51",
 }
 
 export const presale: any = {
-    [mainnet.id]: "",
-    [bsc.id]: "",
+    // [mainnet.id]: "",
+    // [bsc.id]: "",
     [goerli.id]: "0xb500109dCA564e41386935dC19E16d79A4672655",
     [bscTestnet.id]: "0x9CAEAa515f49d13A68e3770eb57522e14e0bc0c3",
 }
