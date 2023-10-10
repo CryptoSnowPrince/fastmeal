@@ -122,7 +122,7 @@ export default function BuyCard(props: any) {
             setPending(true)
             try {
                 const feeData = await fetchFeeData()
-                console.log('[PRINCE] feeData: ', feeData)
+                // console.log('[PRINCE] feeData: ', feeData)
 
                 let data: any = null
                 if (btnMsg === 'ENABLE BUY') {
@@ -148,7 +148,13 @@ export default function BuyCard(props: any) {
                 // console.log('[PRINCE] preparedData: ', preparedData)
                 const writeData = await writeContract(preparedData)
                 // console.log('[PRINCE] writeData: ', writeData)
-                const txData = await waitForTransaction(writeData)
+                const txPendingData = waitForTransaction(writeData)
+                toast.promise(txPendingData, {
+                    pending: "Waiting for pending... 👌",
+                });
+
+                await txPendingData;
+
                 // console.log('[PRINCE] txData: ', txData)
                 if (btnMsg === 'ENABLE BUY') {
                     toast.success(`Successfully enabled to buy! 👌`)
