@@ -133,12 +133,12 @@ export default function BuyCard(props: any) {
                         args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256]
                     }
                     try {
-                        const fullApproveData = await prepareWriteContract({
+                        // const fullApproveData = 
+                        await prepareWriteContract({
                             ...data,
                             chainId: chain ? chain.id : global.chainIds[0],
                             gasPrice: feeData.gasPrice,
                         })
-                        data = fullApproveData
                     } catch (error) {
                         data = {
                             address: usdt[chain ? chain.id : global.chainIds[0]],
@@ -179,10 +179,21 @@ export default function BuyCard(props: any) {
                 }
             } catch (error) {
                 toast.error('Something went wrong!')
+                toast.error(JSON.stringify(chain))
+                window.alert(JSON.stringify(chain))
+                window.alert(chain?.id)
+                toast.error(chain?.id)
+                toast.error(JSON.stringify(error))
+                window.alert(JSON.stringify(error))
+                window.alert(error)
                 // console.log('[PRINCE] preparedData error: ', error)
             }
-            if (props.setRefresh !== undefined && props.refresh !== undefined) {
-                props.setRefresh(!props.refresh)
+            try {
+                if (props.setRefresh !== undefined && props.refresh !== undefined) {
+                    props.setRefresh(!props.refresh)
+                }
+            } catch (error) {
+                window.alert(error)
             }
             setPending(false)
             return
