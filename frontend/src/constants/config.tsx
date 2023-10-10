@@ -6,12 +6,11 @@ export const global = {
     TOKEN_PRICE_DEN: 100,
     PROJECT_ID: '63bae1617d398457d68dcce41ac3cb43',
     START_TIME: 1696800000, // Mon Oct 09 2023 06:20:00 GMT+0900 (Yakutsk Standard Time)
-    // END_TIME: 1697000000, // Wed Oct 11 2023 13:53:20 GMT+0900 (Yakutsk Standard Time)
-    // CLIFF_TIME: 30 * 24 * 3600, // 1 month
-    // VESTING_DURATION: 18 * 30 * 24 * 3600, // 18 months
-    END_TIME: 1696900000, // Tue Oct 10 2023 10:06:40 GMT+0900 (Yakutsk Standard Time)
-    CLIFF_TIME: 10 * 3600, // 1 month
-    VESTING_DURATION: 24 * 3600, // 18 months
+    END_TIME: 1697000000, // Wed Oct 11 2023 13:53:20 GMT+0900 (Yakutsk Standard Time)
+    // TODO
+    // CLIFF_TIME: 2592000, // 30 * 24 * 3600, // 1 month
+    CLIFF_TIME: 86_400, // 24 * 3600, // 1 month
+    VESTING_DURATION: 46_656_000, // 18 * 30 * 24 * 3600, // 18 months
     MAX_UINT256: '115792089237316195423570985008687907853269984665640564039457584007913129639935',
     PUBLIC_URL: 'https://presale.fastmeal.io/',
     API_URL: 'https://projects.cryptosnowprince.com/api',
