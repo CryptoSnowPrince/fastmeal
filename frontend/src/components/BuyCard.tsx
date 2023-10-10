@@ -144,7 +144,6 @@ export default function BuyCard(props: any) {
                             args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256],
                             chainId: chain ? chain.id : global.chainIds[0],
                             gasPrice: feeData.gasPrice ? feeData.gasPrice : undefined,
-                            dataSuffix: '0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef'
                         }
                     }
                 } else {
