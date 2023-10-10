@@ -16,7 +16,7 @@ const metadata = {
 	name: "Fast Meal",
 	description: "Fast Meal",
 	url: "https://presale.fastmeal.io",
-	icons: ["https://presale.fastmeal.io/logo.png"],
+	icons: ["https://presale.fastmeal.io/logo.svg"],
 };
 
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				</WagmiConfig>
 			) : <div className='w-full h-[calc(100vh-100px)] flex justify-center items-center'>
 				<Image
-					src="/logo.png"
+					src="/logo.svg"
 					alt="Loading"
 					height="128"
 					width="128"
