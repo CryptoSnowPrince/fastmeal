@@ -18,7 +18,7 @@ export const global = {
     chainIds: [mainnet.id, bsc.id, goerli.id, bscTestnet.id]
 }
 
-export const usdt = {
+export const usdt: any = {
     [mainnet.id]: "",
     [bsc.id]: "",
     [goerli.id]: "0x3F2C908a3C236b4e3c32Bfb37DB823B54d21999B",
@@ -32,7 +32,7 @@ export const token = {
     [bscTestnet.id]: "0xFce807fD77651E20FAdBAb378f7485D42d54Ac51",
 }
 
-export const presale = {
+export const presale: any = {
     [mainnet.id]: "",
     [bsc.id]: "",
     [goerli.id]: "0xb500109dCA564e41386935dC19E16d79A4672655",

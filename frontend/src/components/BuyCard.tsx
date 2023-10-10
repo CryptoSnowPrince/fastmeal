@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleDown, faClock } from "@fortawesome/free-solid-svg-icons";
 import { useAccount, useNetwork } from "wagmi";
-import { writeContract } from "@wagmi/core"
-import { displayRemainTime, formatNumber, getMaxValue, getPresaleMsg, getWalletWarningMsg } from "@/utils";
+import { writeContract, prepareWriteContract, fetchFeeData, waitForTransaction } from "@wagmi/core"
+import { delayMs, displayRemainTime, formatNumber, getMaxValue, getPresaleMsg, getWalletWarningMsg, isSupportedChain } from "@/utils";
 import { toast } from "react-toastify";
-import { formatUnits } from "viem";
-import { global } from "@/constants/config";
+import { formatUnits, parseUnits } from "viem";
+import { MODE, global, presale, usdt } from "@/constants/config";
+import presaleABI from '../constants/abi/presale.json'
+import erc20ABI from '../constants/abi/token.json'
 
 export default function BuyCard(props: any) {
     const [usdtAmount, setUsdtAmount] = useState('')
@@ -51,7 +53,7 @@ export default function BuyCard(props: any) {
 
                     if (statusByChain[8].status === "success" && statusByChain[3].status === "success") {
                         _info.tokenRawBalance = statusByChain[8].result
-                        _info.tokenBalance = parseFloat(formatUnits(statusByChain[8].result, statusByChain[3].result))
+                        _info.tokenBalance = parseFloat(formatUnits(statusByChain[8].result, 6))
                     }
                     setInfo(_info)
                 }
@@ -60,6 +62,112 @@ export default function BuyCard(props: any) {
             }
         }
     }, [props.presaleStatus, chain, address])
+
+    const [btnMsg, setBtnMsg] = useState("BUY NOW")
+    const [pending, setPending] = useState(false)
+
+    useEffect(() => {
+        if (pending) {
+            setBtnMsg("PENDING...")
+            return
+        }
+
+        if (!address) {
+            setBtnMsg("CONNECT WALLET")
+            return
+        }
+
+        if (!isSupportedChain(chain)) {
+            setBtnMsg("UNSUPPORED CHAIN")
+            return
+        }
+
+        if (props?.presaleMode === MODE.BEFORE_PRESALE) {
+            setBtnMsg(displayRemainTime(parseInt(props.timer)))
+            return
+        }
+
+        if (props?.presaleMode !== MODE.ACTIVE_PRESALE) {
+            setBtnMsg("COMING SOON")
+            return
+        }
+
+        const validUsdt = parseFloat(usdtAmount)
+        if (!validUsdt || validUsdt < 0) {
+            setBtnMsg("Enter USDT amount")
+            return
+        }
+
+        if (validUsdt > getMaxValue(info.usdtBalance, false)) {
+            setBtnMsg("Insufficient USDT balance")
+            return
+        }
+
+        const validToken = parseFloat(tokenAmount)
+        if (!validToken || validToken < 0) {
+            setBtnMsg("Enter $FTL amount")
+            return
+        }
+
+        if (info.usdtAllowance < validUsdt + 10000) {
+            setBtnMsg('ENABLE BUY')
+            return
+        }
+
+        setBtnMsg('BUY NOW')
+    }, [address, chain, tokenAmount, usdtAmount, info.usdtAllowance, info.usdtBalance, props, pending])
+
+    const handleBtn = async () => {
+        if (btnMsg === 'ENABLE BUY' || btnMsg === 'BUY NOW') {
+            setPending(true)
+            try {
+                const feeData = await fetchFeeData()
+                console.log('[PRINCE] feeData: ', feeData)
+
+                let data: any = null
+                if (btnMsg === 'ENABLE BUY') {
+                    data = {
+                        address: usdt[chain ? chain.id : global.chainIds[0]],
+                        abi: erc20ABI,
+                        functionName: 'increaseAllowance',
+                        args: [global.MAX_UINT256]
+                    }
+                } else {
+                    data = {
+                        address: presale[chain ? chain.id : global.chainIds[0]],
+                        abi: presaleABI,
+                        functionName: 'buyToken',
+                        args: [parseUnits(tokenAmount, 6)]
+                    }
+                }
+                const preparedData = await prepareWriteContract({
+                    ...data,
+                    chainId: chain ? chain.id : global.chainIds[0],
+                    gasPrice: feeData.gasPrice,
+                })
+                // console.log('[PRINCE] preparedData: ', preparedData)
+                const writeData = await writeContract(preparedData)
+                // console.log('[PRINCE] writeData: ', writeData)
+                const txData = await waitForTransaction(writeData)
+                // console.log('[PRINCE] txData: ', txData)
+                if (btnMsg === 'ENABLE BUY') {
+                    toast.success(`Successfully enabled to buy! 👌`)
+                } else {
+                    toast.success(`Successfully purchased ${formatNumber(parseFloat(tokenAmount))} $FTL! 👍`)
+                }
+            } catch (error) {
+                toast.error('Something went wrong!')
+                // console.log('[PRINCE] preparedData error: ', error)
+            }
+            if (props.setRefresh !== undefined && props.refresh !== undefined) {
+                props.setRefresh(!props.refresh)
+            }
+            setPending(false)
+            return
+        }
+
+        toast.warn(btnMsg)
+    }
 
     return (
         <div className="w-full lg:w-1/3 h-[450px] rounded-2xl border-2 border-gray-700 flex flex-col items-center justify-center text-center px-2 bg-center bg-no-repeat bg-contain bg-[url('/back2.png')]">
@@ -78,9 +186,10 @@ export default function BuyCard(props: any) {
                 </div>
                 <div className="w-full h-[50px] px-3 rounded-xl border-2 border-gray-700 flex flex-row items-center justify-between text-2xl text-center">
                     <input
-                        className="bg-transparent focus:border-0 active:border-0 focus:outline-0 mb-1"
+                        className={`bg-transparent focus:border-0 active:border-0 focus:outline-0 mb-1 ${pending ? `text-gray-800` : `text-white`}`}
                         placeholder="0"
                         value={usdtAmount}
+                        disabled={pending}
                         onChange={(e) => {
                             const usdtValue = parseFloat(e.target.value)
                             if (usdtValue && usdtValue > 0) {
@@ -98,7 +207,8 @@ export default function BuyCard(props: any) {
                     <div className="flex flex-row items-center justify-end gap-2 text-center">
                         <label>Balance: {formatNumber(info.usdtBalance)} </label>
                         <button
-                            className="text-yellow-400"
+                            className={`${pending ? `text-yellow-800` : `text-yellow-400`}`}
+                            disabled={pending}
                             onClick={(e) => {
                                 const maxValue = getMaxValue(info.usdtBalance, false);
                                 if (maxValue && maxValue > 0) {
@@ -117,9 +227,10 @@ export default function BuyCard(props: any) {
                 </div>
                 <div className="w-full h-[50px] px-3 rounded-xl border-2 border-gray-700 flex flex-row items-center justify-between text-2xl text-center">
                     <input
-                        className="bg-transparent focus:border-0 active:border-0 focus:outline-0 mb-1"
+                        className={`bg-transparent focus:border-0 active:border-0 focus:outline-0 mb-1 ${pending ? `text-gray-800` : `text-white`}`}
                         placeholder="0"
                         value={tokenAmount}
+                        disabled={pending}
                         onChange={(e) => {
                             const tokenValue = parseFloat(e.target.value)
                             if (tokenValue && tokenValue > 0) {
@@ -140,9 +251,11 @@ export default function BuyCard(props: any) {
                 </div>
             </div>
             <button
-                className="lg:w-3/4 w-full h-[50px] bg-black/[0.95] text-2xl rounded-2xl border-2 border-yellow-500 my-5"
+                className={`lg:w-3/4 w-full h-[50px] bg-black/[0.95] text-2xl rounded-2xl border-2 my-5 ${pending ? `border-yellow-700 text-gray-800` : `border-yellow-500 text-white`}`}
+                disabled={pending}
+                onClick={handleBtn}
             >
-                BUY
+                {btnMsg}
             </button>
         </div>
     );

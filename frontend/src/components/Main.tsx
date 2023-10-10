@@ -41,9 +41,9 @@ export default function Main() {
                 <div className="hidden w-full lg:w-1/3 h-[450px] lg:flex bg-center bg-no-repeat bg-contain bg-[url('/back1.webp')] hover:animate-pulse" />
                 {
                     presaleMode === MODE.BEFORE_PRESALE || presaleMode === MODE.ACTIVE_PRESALE ? (
-                        <BuyCard presaleMode={presaleMode} timer={timer} setRefresh={setRefresh} presaleStatus={presaleStatus} />
+                        <BuyCard presaleMode={presaleMode} timer={timer} setRefresh={setRefresh} refresh={refresh} presaleStatus={presaleStatus} />
                     ) : (
-                        <ClaimCard presaleMode={presaleMode} timer={timer} setRefresh={setRefresh} presaleStatus={presaleStatus} />
+                        <ClaimCard presaleMode={presaleMode} timer={timer} setRefresh={setRefresh} refresh={refresh} presaleStatus={presaleStatus} />
                     )
                 }
                 <div className="hidden w-full lg:w-1/3 h-[450px] lg:flex bg-center bg-no-repeat bg-contain bg-[url('/back3.webp')] hover:animate-pulse" />

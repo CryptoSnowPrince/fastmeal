@@ -82,14 +82,20 @@ export function formatNumber(num: number) {
     }
 }
 
+export function isSupportedChain(chain: any) {
+    if (!chain) return false
+
+    return global.chainIds.includes(chain.id);
+}
+
 export function getWalletWarningMsg(chain: any, address: any) {
     if (!address) {
         return 'Please connect wallet!'
     } else if (!chain) {
         return 'Please connect wallet to Ethereum Mainnet or other supported chain!'
     }
-    const isSupportedChain = global.chainIds.includes(chain.id);
-    if (!isSupportedChain) {
+    const isSupported = isSupportedChain(chain);
+    if (!isSupported) {
         return 'Please connect wallet to Ethereum Mainnet or other supported chain!'
     }
 
@@ -129,4 +135,11 @@ export function getMaxValue(tokenBalance: number, isNative: boolean) {
     }
 
     return tokenBalance
+}
+
+export function delayMs(ms: number) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms)
+        // console.log(`${ms}ms delay...`)
+    });
 }

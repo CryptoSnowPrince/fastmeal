@@ -45,7 +45,7 @@ export default function Status(props: any) {
                     }
 
                     if (address && statusByChain[4].status === "success" && statusByChain[3].status === "success") {
-                        _info.userAmounts += parseFloat(formatUnits(statusByChain[4].result[0], statusByChain[3].result))
+                        _info.userAmounts += parseFloat(formatUnits(statusByChain[4].result[0], 6))
                         _info.userFunds += parseFloat(formatUnits(statusByChain[4].result[2], statusByChain[3].result))
                     }
                 }
