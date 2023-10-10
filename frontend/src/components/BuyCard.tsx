@@ -177,7 +177,7 @@ export default function BuyCard(props: any) {
     }
 
     return (
-        <div className="w-full lg:w-1/3 h-[450px] rounded-2xl border-2 border-gray-700 flex flex-col items-center justify-center text-center px-2 bg-center bg-no-repeat bg-contain bg-[url('/back2.webp')]">
+        <div className="w-full lg:w-[600px] h-[450px] rounded-2xl border-2 border-gray-700 flex flex-col items-center justify-center text-center px-2 bg-center bg-no-repeat bg-contain bg-[url('/back2.webp')]">
             <div className="w-full lg:w-3/4 rounded-2xl bg-black/[0.95] border-2 border-gray-700 flex flex-row justify-between items-center text-center px-5 py-2 my-2">
                 <div className="flex flex-col items-center">
                     <label className="text-yellow-400 text-2xl">{getPresaleMsg(props.presaleMode)}</label>
@@ -193,7 +193,7 @@ export default function BuyCard(props: any) {
                 </div>
                 <div className="w-full h-[50px] px-3 rounded-xl border-2 border-gray-700 flex flex-row items-center justify-between text-2xl text-center">
                     <input
-                        className={`bg-transparent focus:border-0 active:border-0 focus:outline-0 mb-1 ${pending ? `text-gray-800` : `text-white`}`}
+                        className={`w-full bg-transparent focus:border-0 active:border-0 focus:outline-0 mb-1 ${pending ? `text-gray-800` : `text-white`}`}
                         placeholder="0"
                         value={usdtAmount}
                         disabled={pending}
@@ -208,7 +208,7 @@ export default function BuyCard(props: any) {
                             setUsdtAmount(e.target.value)
                         }}
                     />
-                    <Image src='/usdt.svg' width={35} height={35} alt='logo' />
+                    <Image src='/usdt.svg' width={35} height={35} alt='usdt' />
                 </div>
                 <div className="w-full px-3 flex flex-row items-center justify-end text-sm text-center">
                     <div className="flex flex-row items-center justify-end gap-2 text-center">
@@ -234,7 +234,7 @@ export default function BuyCard(props: any) {
                 </div>
                 <div className="w-full h-[50px] px-3 rounded-xl border-2 border-gray-700 flex flex-row items-center justify-between text-2xl text-center">
                     <input
-                        className={`bg-transparent focus:border-0 active:border-0 focus:outline-0 mb-1 ${pending ? `text-gray-800` : `text-white`}`}
+                        className={`w-full bg-transparent focus:border-0 active:border-0 focus:outline-0 mb-1 ${pending ? `text-gray-800` : `text-white`}`}
                         placeholder="0"
                         value={tokenAmount}
                         disabled={pending}
@@ -249,7 +249,7 @@ export default function BuyCard(props: any) {
                             setTokenAmount(e.target.value)
                         }}
                     />
-                    <Image src='/token.png' width={35} height={35} alt='logo' />
+                    <Image src='/token.svg' width={35} height={35} alt='ftl' />
                 </div>
                 <div className="w-full px-3 flex flex-row items-center justify-end text-sm text-center">
                     <div className="flex flex-row items-center justify-end gap-2 text-center">

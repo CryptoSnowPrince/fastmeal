@@ -1,4 +1,4 @@
-import './globals.css'
+import './css/globals.css'
 import Image from 'next/image';
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 

@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
+	output: 'export',
 	images: {
 		loader: 'imgix',
-		path: 'https://fastmeal.cryptosnowprince.com/',
+		path: 'https://fastmeal.cryptosnowprince.com',
 	},
 };
 
