@@ -21,7 +21,7 @@ export default function Footer() {
                     <h1 className="lg:text-lg text-sm">Audit</h1>
                 </div>
                 <div className="flex flex-col text-center">
-                    <Image src='/dextools.webp' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
+                    <Image src='/dextools.svg' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
                     <h1 className="lg:text-lg text-sm">Dextools</h1>
                 </div>
             </div >
