@@ -2,8 +2,23 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Main from "@/components/Main";
 import Head from "next/head";
+import { useAccount, useNetwork } from "wagmi";
+import { useEffect, useState } from "react";
+import { getWalletWarningMsg } from "@/utils";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
+	const { address } = useAccount()
+	const { chain } = useNetwork()
+
+	useEffect(() => {
+		const waring = getWalletWarningMsg(chain, address);
+		if (waring) {
+			toast.warn(waring)
+		}
+	}, [address, chain])
+
 	return (
 		<>
 			<Head>
@@ -22,6 +37,7 @@ export default function Home() {
 				<Header />
 				<Main />
 				<Footer />
+				<ToastContainer pauseOnFocusLoss={true} position="top-right" />
 			</div>
 		</>
 	);

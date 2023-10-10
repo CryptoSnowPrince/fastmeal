@@ -89,7 +89,6 @@ export function usePresaleStatus(refresh: boolean) {
                     chainId: global.chains[index].id,
                     contracts
                 })
-                console.log(result)
                 _data = {
                     ..._data,
                     [global.chains[index].id]: result
