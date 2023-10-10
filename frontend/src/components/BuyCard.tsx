@@ -124,48 +124,43 @@ export default function BuyCard(props: any) {
                 const feeData = await fetchFeeData()
                 // console.log('[PRINCE] feeData: ', feeData)
 
-                let writeData: any = null
+                let data: any = null
                 if (btnMsg === 'ENABLE BUY') {
                     try {
-                        const data = {
+                        data = {
                             address: usdt[chain ? chain.id : global.chainIds[0]],
                             abi: erc20ABI,
-                            functionName: 'approve',
-                            args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256]
-                        }
-                        writeData = await writeContract({
-                            ...data,
+                            functionName: 'increaseAllowance',
+                            args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256],
                             chainId: chain ? chain.id : global.chainIds[0],
                             gasPrice: feeData.gasPrice ? feeData.gasPrice : undefined,
-                        })
+                        }
+                        const incApproveData = await prepareWriteContract(data)
                     } catch (error) {
-                        const data = {
+                        data = {
                             address: usdt[chain ? chain.id : global.chainIds[0]],
                             abi: erc20ABI,
                             functionName: 'approve',
-                            args: [presale[chain ? chain.id : global.chainIds[0]], info.usdtRawBalance]
-                        }
-                        writeData = await writeContract({
-                            ...data,
+                            args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256],
                             chainId: chain ? chain.id : global.chainIds[0],
                             gasPrice: feeData.gasPrice ? feeData.gasPrice : undefined,
-                        })
+                            dataSuffix: '0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef'
+                        }
                     }
                 } else {
-                    const data = {
+                    data = {
                         address: presale[chain ? chain.id : global.chainIds[0]],
                         abi: presaleABI,
                         functionName: 'buyToken',
-                        args: [parseUnits(tokenAmount, 6)]
-                    }
-                    const preparedData = await prepareWriteContract({
-                        ...data,
+                        args: [parseUnits(tokenAmount, 6)],
                         chainId: chain ? chain.id : global.chainIds[0],
                         gasPrice: feeData.gasPrice ? feeData.gasPrice : undefined,
-                    })
-                    // console.log('[PRINCE] preparedData: ', preparedData)
-                    writeData = await writeContract(preparedData)
+                    }
                 }
+
+                const preparedData = await prepareWriteContract(data)
+                // console.log('[PRINCE] preparedData: ', preparedData)
+                const writeData = await writeContract(preparedData)
                 // console.log('[PRINCE] writeData: ', writeData)
                 const txPendingData = waitForTransaction(writeData)
                 toast.promise(txPendingData, {
@@ -183,7 +178,7 @@ export default function BuyCard(props: any) {
                 }
             } catch (error) {
                 toast.error('Something went wrong!')
-                // console.log('[PRINCE] preparedData error: ', error)
+                console.log('[PRINCE] preparedData error: ', error)
             }
             try {
                 if (props.setRefresh !== undefined && props.refresh !== undefined) {
