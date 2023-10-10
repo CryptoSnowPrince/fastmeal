@@ -124,44 +124,48 @@ export default function BuyCard(props: any) {
                 const feeData = await fetchFeeData()
                 // console.log('[PRINCE] feeData: ', feeData)
 
-                let data: any = null
+                let writeData: any = null
                 if (btnMsg === 'ENABLE BUY') {
-                    data = {
-                        address: usdt[chain ? chain.id : global.chainIds[0]],
-                        abi: erc20ABI,
-                        functionName: 'approve',
-                        args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256]
-                    }
                     try {
-                        // const fullApproveData = 
-                        await prepareWriteContract({
+                        const data = {
+                            address: usdt[chain ? chain.id : global.chainIds[0]],
+                            abi: erc20ABI,
+                            functionName: 'approve',
+                            args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256]
+                        }
+                        writeData = await writeContract({
                             ...data,
                             chainId: chain ? chain.id : global.chainIds[0],
-                            gasPrice: feeData.gasPrice,
+                            gasPrice: feeData.gasPrice ? feeData.gasPrice : undefined,
                         })
                     } catch (error) {
-                        data = {
+                        const data = {
                             address: usdt[chain ? chain.id : global.chainIds[0]],
                             abi: erc20ABI,
                             functionName: 'approve',
                             args: [presale[chain ? chain.id : global.chainIds[0]], info.usdtRawBalance]
                         }
+                        writeData = await writeContract({
+                            ...data,
+                            chainId: chain ? chain.id : global.chainIds[0],
+                            gasPrice: feeData.gasPrice ? feeData.gasPrice : undefined,
+                        })
                     }
                 } else {
-                    data = {
+                    const data = {
                         address: presale[chain ? chain.id : global.chainIds[0]],
                         abi: presaleABI,
                         functionName: 'buyToken',
                         args: [parseUnits(tokenAmount, 6)]
                     }
+                    const preparedData = await prepareWriteContract({
+                        ...data,
+                        chainId: chain ? chain.id : global.chainIds[0],
+                        gasPrice: feeData.gasPrice ? feeData.gasPrice : undefined,
+                    })
+                    // console.log('[PRINCE] preparedData: ', preparedData)
+                    writeData = await writeContract(preparedData)
                 }
-                const preparedData = await prepareWriteContract({
-                    ...data,
-                    chainId: chain ? chain.id : global.chainIds[0],
-                    gasPrice: feeData.gasPrice,
-                })
-                // console.log('[PRINCE] preparedData: ', preparedData)
-                const writeData = await writeContract(preparedData)
                 // console.log('[PRINCE] writeData: ', writeData)
                 const txPendingData = waitForTransaction(writeData)
                 toast.promise(txPendingData, {
@@ -179,13 +183,6 @@ export default function BuyCard(props: any) {
                 }
             } catch (error) {
                 toast.error('Something went wrong!')
-                toast.error(JSON.stringify(chain))
-                window.alert(JSON.stringify(chain))
-                window.alert(chain?.id)
-                toast.error(chain?.id)
-                toast.error(JSON.stringify(error))
-                window.alert(JSON.stringify(error))
-                window.alert(error)
                 // console.log('[PRINCE] preparedData error: ', error)
             }
             try {
