@@ -159,8 +159,10 @@ export default function BuyCard(props: any) {
 
                 const preparedData = await prepareWriteContract(data)
                 // console.log('[PRINCE] preparedData: ', preparedData)
+
                 const writeData = await writeContract(preparedData)
                 // console.log('[PRINCE] writeData: ', writeData)
+
                 const txPendingData = waitForTransaction(writeData)
                 toast.promise(txPendingData, {
                     pending: "Waiting for pending... 👌",
@@ -177,7 +179,7 @@ export default function BuyCard(props: any) {
                 }
             } catch (error) {
                 toast.error('Something went wrong!')
-                console.log('[PRINCE] preparedData error: ', error)
+                // console.log('[PRINCE] preparedData error: ', error)
             }
             try {
                 if (props.setRefresh !== undefined && props.refresh !== undefined) {
