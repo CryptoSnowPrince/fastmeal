@@ -132,6 +132,21 @@ export default function BuyCard(props: any) {
                         functionName: 'approve',
                         args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256]
                     }
+                    try {
+                        const fullApproveData = await prepareWriteContract({
+                            ...data,
+                            chainId: chain ? chain.id : global.chainIds[0],
+                            gasPrice: feeData.gasPrice,
+                        })
+                        data = fullApproveData
+                    } catch (error) {
+                        data = {
+                            address: usdt[chain ? chain.id : global.chainIds[0]],
+                            abi: erc20ABI,
+                            functionName: 'approve',
+                            args: [presale[chain ? chain.id : global.chainIds[0]], info.usdtRawBalance]
+                        }
+                    }
                 } else {
                     data = {
                         address: presale[chain ? chain.id : global.chainIds[0]],
