@@ -75,14 +75,14 @@ export default function Status(props: any) {
             <div className="lg:w-1/6 w-full rounded-2xl border-2 border-gray-700 flex lg:flex-col flex-row lg:justify-center justify-between items-center text-center px-2 py-1">
                 <label>Total Sold</label>
                 <div className="flex flex-col items-center">
-                    <Image src='/logo.png' width={35} height={35} alt='logo' />
+                    <Image src='/token.png' width={35} height={35} alt='logo' />
                     <label className="text-yellow-500">{formatNumber(info.totalAmounts)} $FTL </label>
                 </div>
             </div>
             <div className="lg:w-1/6 w-full rounded-2xl border-2 border-gray-700 flex lg:flex-col flex-row lg:justify-center justify-between items-center text-center px-2 py-1">
                 <label>You Receive </label>
                 <div className="flex flex-col items-center">
-                    <Image src='/logo.png' width={35} height={35} alt='logo' />
+                    <Image src='/token.png' width={35} height={35} alt='logo' />
                     <label className="text-yellow-500">{formatNumber(info.userAmounts)} $FTL </label>
                 </div>
             </div>

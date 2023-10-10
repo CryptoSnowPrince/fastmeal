@@ -5,23 +5,23 @@ export default function Footer() {
         <footer className='w-full'>
             <div className='lg:w-2/3 w-11/12 flex flex-row text-white items-center justify-between mx-auto my-5'>
                 <div className="flex flex-col text-center">
-                    <Image src='/gitbook.png' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
+                    <Image src='/gitbook.webp' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
                     <h1 className="lg:text-lg text-sm">Gitbook</h1>
                 </div>
                 <div className="flex flex-col text-center">
-                    <Image src='/telegram.png' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
+                    <Image src='/telegram.webp' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
                     <h1 className="lg:text-lg text-sm">Telegram</h1>
                 </div>
                 <div className="flex flex-col text-center">
-                    <Image src='/x.png' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
+                    <Image src='/x.webp' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
                     <h1 className="lg:text-lg text-sm">Twitter</h1>
                 </div>
                 <div className="flex flex-col text-center">
-                    <Image src='/audit.png' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
+                    <Image src='/audit.webp' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
                     <h1 className="lg:text-lg text-sm">Audit</h1>
                 </div>
                 <div className="flex flex-col text-center">
-                    <Image src='/dextools.png' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
+                    <Image src='/dextools.webp' width={240} height={240} alt='logo' className="lg:w-[220px] w-[70px] my-auto" />
                     <h1 className="lg:text-lg text-sm">Dextools</h1>
                 </div>
             </div >
