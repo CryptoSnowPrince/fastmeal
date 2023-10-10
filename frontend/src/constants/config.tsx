@@ -4,7 +4,7 @@ export const global = {
     REFETCH_INTERVAL: 10000,
     TOKEN_PRICE_NUM: 1,
     TOKEN_PRICE_DEN: 100,
-    PROJECT_ID: '63bae1617d398457d68dcce41ac3cb43',
+    PROJECT_ID: '3be515f9051dea9afa2b531d07a380d9',
     START_TIME: 1696800000, // Mon Oct 09 2023 06:20:00 GMT+0900 (Yakutsk Standard Time)
     END_TIME: 1697000000, // Wed Oct 11 2023 13:53:20 GMT+0900 (Yakutsk Standard Time)
     // TODO
