@@ -116,7 +116,7 @@ export function getPresaleMsg(presaleMode: any) {
     }
 
     if (MODE.CLIFF_DURATION === presaleMode) {
-        return "Vesting Coming Soon!"
+        return "Vesting Soon!"
     }
 
     if (MODE.VESTING_DURATION === presaleMode) {

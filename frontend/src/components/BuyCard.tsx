@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleDown, faClock } from "@fortawesome/free-solid-svg-icons";
 import { useAccount, useNetwork } from "wagmi";
 import { writeContract, prepareWriteContract, fetchFeeData, waitForTransaction } from "@wagmi/core"
-import { delayMs, displayRemainTime, formatNumber, getMaxValue, getPresaleMsg, getWalletWarningMsg, isSupportedChain } from "@/utils";
+import { displayRemainTime, formatNumber, getMaxValue, getPresaleMsg, isSupportedChain } from "@/utils";
 import { toast } from "react-toastify";
 import { formatUnits, parseUnits } from "viem";
 import { MODE, global, presale, usdt } from "@/constants/config";
@@ -115,7 +115,7 @@ export default function BuyCard(props: any) {
         }
 
         setBtnMsg('BUY NOW')
-    }, [address, chain, tokenAmount, usdtAmount, info.usdtAllowance, info.usdtBalance, props, pending])
+    }, [address, chain, tokenAmount, usdtAmount, info.usdtAllowance, info.usdtBalance, pending, props?.presaleMode, props.timer])
 
     const handleBtn = async () => {
         if (btnMsg === 'ENABLE BUY' || btnMsg === 'BUY NOW') {
@@ -153,9 +153,10 @@ export default function BuyCard(props: any) {
                     pending: "Waiting for pending... 👌",
                 });
 
-                await txPendingData;
-
+                // console.log('[PRINCE] txPendingData: ', txPendingData)
+                const txData = await txPendingData;
                 // console.log('[PRINCE] txData: ', txData)
+
                 if (btnMsg === 'ENABLE BUY') {
                     toast.success(`Successfully enabled to buy! 👌`)
                 } else {
@@ -183,7 +184,7 @@ export default function BuyCard(props: any) {
                 </div>
                 <div className="flex flex-col items-end">
                     <FontAwesomeIcon icon={faClock} size="xl" />
-                    <label className="text-yellow-400 text-xl">{displayRemainTime(parseInt(props.timer))}</label>
+                    <label className="text-yellow-400 text-lg">{displayRemainTime(parseInt(props.timer))}</label>
                 </div>
             </div>
             <div className="w-full lg:w-3/4 py-2 bg-black/[0.95] rounded-2xl border-2 border-gray-700 flex flex-col justify-center text-center px-2 mt-2">
