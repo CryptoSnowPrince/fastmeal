@@ -137,7 +137,7 @@ export default function ClaimCard(props: any) {
     }
 
     return (
-        <div className="w-full lg:w-[600px] rounded-2xl border-2 border-gray-700 flex flex-col items-center justify-center text-center px-2 py-5 bg-center bg-no-repeat bg-contain bg-[url('/back2.webp')]">
+        <div className="w-full lg:w-[600px] rounded-2xl border-2 border-gray-700 flex flex-col items-center justify-center text-center px-2 py-5 bg-center bg-no-repeat bg-contain]">
             <div className="w-full lg:w-3/4 rounded-2xl bg-black/[0.95] border-2 border-gray-700 flex flex-row justify-between items-center text-center px-5 py-2 my-2">
                 <div className="flex flex-col items-center">
                     <label className="text-yellow-400 text-2xl">{getPresaleMsg(props.presaleMode)}</label>
