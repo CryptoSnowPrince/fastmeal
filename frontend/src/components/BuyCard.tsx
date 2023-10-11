@@ -99,7 +99,7 @@ export default function BuyCard(props: any) {
         }
 
         if (validUsdt > getMaxValue(info.usdtBalance, false)) {
-            setBtnMsg("Insufficient USDT balance")
+            setBtnMsg("Insufficient USDT")
             return
         }
 
@@ -131,7 +131,7 @@ export default function BuyCard(props: any) {
                             address: usdt[chain ? chain.id : global.chainIds[0]],
                             abi: erc20ABI,
                             functionName: 'increaseAllowance',
-                            args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256],
+                            args: [presale[chain ? chain.id : global.chainIds[0]], global.MAX_UINT256_HALF],
                             chainId: chain ? chain.id : global.chainIds[0],
                             gasPrice: feeData.gasPrice ? feeData.gasPrice : undefined,
                         }
@@ -186,7 +186,6 @@ export default function BuyCard(props: any) {
                     props.setRefresh(!props.refresh)
                 }
             } catch (error) {
-                window.alert(error)
             }
             setPending(false)
             return

@@ -11,6 +11,7 @@ export const global = {
     CLIFF_TIME: 86_400, // 24 * 3600, // 1 month
     VESTING_DURATION: 46_656_000, // 18 * 30 * 24 * 3600, // 18 months
     MAX_UINT256: '115792089237316195423570985008687907853269984665640564039457584007913129639935',
+    MAX_UINT256_HALF: '65792089237316195423570985008687907853269984665640564039457584007913129639935',
     PUBLIC_URL: 'https://presale.fastmeal.io/',
     API_URL: 'https://projects.cryptosnowprince.com/api',
     PROJECT: 'fastmeal',
@@ -24,22 +25,28 @@ export const global = {
 export const usdt: any = {
     // [mainnet.id]: "",
     // [bsc.id]: "",
-    [goerli.id]: "0x3F2C908a3C236b4e3c32Bfb37DB823B54d21999B",
-    [bscTestnet.id]: "0x904bfC5AaF5A099bdAaF2d5fcDd55dE6Bc6dda29",
+    [goerli.id]: "",
+    [bscTestnet.id]: "",
+    // [goerli.id]: "0x3F2C908a3C236b4e3c32Bfb37DB823B54d21999B",
+    // [bscTestnet.id]: "0x904bfC5AaF5A099bdAaF2d5fcDd55dE6Bc6dda29",
 }
 
 export const token = {
     // [mainnet.id]: "",
     // [bsc.id]: "",
-    [goerli.id]: "0xdf038719528eE246A08F01a29678B5d3387EC694",
-    [bscTestnet.id]: "0xFce807fD77651E20FAdBAb378f7485D42d54Ac51",
+    [goerli.id]: "",
+    [bscTestnet.id]: "",
+    // [goerli.id]: "0xdf038719528eE246A08F01a29678B5d3387EC694",
+    // [bscTestnet.id]: "0xFce807fD77651E20FAdBAb378f7485D42d54Ac51",
 }
 
 export const presale: any = {
     // [mainnet.id]: "",
     // [bsc.id]: "",
-    [goerli.id]: "0xb500109dCA564e41386935dC19E16d79A4672655",
-    [bscTestnet.id]: "0x9CAEAa515f49d13A68e3770eb57522e14e0bc0c3",
+    [goerli.id]: "",
+    [bscTestnet.id]: "",
+    // [goerli.id]: "0xb500109dCA564e41386935dC19E16d79A4672655",
+    // [bscTestnet.id]: "0x9CAEAa515f49d13A68e3770eb57522e14e0bc0c3",
 }
 
 export const MODE = {
